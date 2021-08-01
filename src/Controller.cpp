@@ -1,6 +1,6 @@
 #include "Controller.hpp"
 #include "Character.hpp"
-#include "fireFist.hpp"
+#include "FireFist.hpp"
 #include "PoisonArrow.hpp"
 #include "Heal.hpp"
 #include "Paralysis.hpp"
