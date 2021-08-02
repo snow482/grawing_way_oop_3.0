@@ -27,18 +27,19 @@ int Character::getMaxHp() const {
     return m_maxHp;
 }
 void Character::attack(std::shared_ptr<Character>& enemy, int skillNum) {
-    m_skills[skillNum]->Use(shared_from_this(), enemy);
+    m_skills[skillNum](shared_from_this(), enemy);
 }
-void Character::addSkill(std::shared_ptr<Skill> skill) {
+void Character::addSkill(Skill skill) {
     m_skills.push_back(skill);
 }
+/*
 std::vector<std::string> Character::printSkills() const {
     std::vector<std::string> value;
     for (auto& it : m_skills) {
         value.push_back(it->skillNamePrint());
     }
     return value;
-}
+}*/
 
 void Character::setPoison(int turns, int damage) {
     m_poisonTurns = turns;

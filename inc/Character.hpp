@@ -5,11 +5,13 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
-#include "Skill.hpp"
+#include <functional>
 
-
+class Character;
 // Character - базовый класс
 // std::enable_shared_from_this<Character> - шаблонная магия (статический полиморфизм)
+using Skill = std::function<int(std::shared_ptr<Character>, std::shared_ptr<Character>)>;
+
 class Character : public std::enable_shared_from_this<Character> {
 public:
     Character(std::string name, int hp, int maxHp);
@@ -25,8 +27,8 @@ public:
     void addHp(int hp);
     int getMaxHp() const;
     void attack(std::shared_ptr<Character>& enemy, int skillNum);
-    void addSkill(std::shared_ptr<Skill> skill);
-    std::vector<std::string> printSkills() const;
+    void addSkill(Skill skill);
+    //std::vector<std::string> printSkills() const;
 
     void setPoison(int turns, int damage);
     void setParalyse(int turns);
@@ -37,7 +39,7 @@ private:
     std::string m_name;
     int m_hp = 0;
     int m_maxHp = 0;
-    std::vector<std::shared_ptr<Skill>> m_skills;
+    std::vector<Skill> m_skills;
     int m_poisonTurns = 0;
     int m_poisonDamage = 0;
     int m_paralysedTurns = 0;
