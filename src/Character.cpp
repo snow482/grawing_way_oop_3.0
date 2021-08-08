@@ -26,37 +26,52 @@ void Character::addHp(int hp) {
 int Character::getMaxHp() const {
     return m_maxHp;
 }
-void Character::attack(std::shared_ptr<Character>& enemy, int skillNum) {
+/*void Character::attack(std::shared_ptr<Character>& enemy, int skillNum) {
     m_skills[skillNum](shared_from_this(), enemy);
+}*/
+void Character::addSkill(std::string skillName, Skill skill) {
+    m_skills[skillName] = skill;
 }
-void Character::addSkill(Skill skill) {
-    m_skills.push_back(skill);
-}
-/*
 std::vector<std::string> Character::printSkills() const {
     std::vector<std::string> value;
-    for (auto& it : m_skills) {
-        value.push_back(it->skillNamePrint());
+    for (auto& [name,_] : m_skills) {
+        value.push_back(name);
     }
     return value;
-}*/
+}
 
-void Character::setPoison(int turns, int damage) {
-    m_poisonTurns = turns;
-    m_poisonDamage = damage;
+void Character::nextStartPhaze() {
+    for(auto it = m_startPhaze.begin(); it != m_startPhaze.end();) {
+        int count = (*it)();
+        if(count != 0)
+            ++it;
+        else
+            it = m_startPhaze.erase(it);
+    }
 }
-void Character::setParalyse(int turns) {
-    m_paralysedTurns = turns;
+
+void Character::nextInstantPhaze() {
+    for(auto it = m_instantPhaze.begin(); it != m_instantPhaze.end();) {
+        int count = (*it)();
+        if(count != 0)
+            ++it;
+        else
+            it = m_instantPhaze.erase(it);
+    }
 }
-void Character::setShield(int turns) {
-    m_shieldTurns = turns;
+
+void Character::nextEndPhaze() {
+    for(auto it = m_endPhaze.begin(); it != m_endPhaze.end();) {
+        int count = (*it)();
+        if(count != 0)
+            ++it;
+        else
+            it = m_endPhaze.erase(it);
+    }
 }
-int Character::getParalyseCondition() const {
-    return m_paralysedTurns;
-}
-int Character::getShieldCondition() const {
-    return m_shieldTurns;
-}
+
+
+//переписать на фазы (старт конец середина)
 void Character::nextTurn() {
     if (m_poisonTurns > 0) {
         m_hp -= m_poisonDamage;

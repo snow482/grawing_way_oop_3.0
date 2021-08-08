@@ -1,14 +1,17 @@
 #pragma once
-#include "Skill.hpp"
+#include <functional>
+#include <Character.hpp>
 
 
-class Paralysis : public Skill {
+class Paralysis {
 public:
-    explicit Paralysis(int turns);
-    void Use(std::shared_ptr<Character> self,
-             std::shared_ptr<Character> enemy) override;
+    Paralysis(std::string& skillName);
+    ~Paralysis() = default;
+
+    int operator()(std::shared_ptr<Character> self,
+             std::shared_ptr<Character> enemy);
 private:
-    int m_turns;
+    std::string m_skillName;
 };
 
 

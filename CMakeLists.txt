@@ -14,6 +14,7 @@ set(HEADERS
         inc/VampiricClaw.hpp
         inc/MagicShield.hpp
         inc/Heal.hpp
+        inc/Phazes.hpp
         )
 set(SOURCES
         src/Character.cpp

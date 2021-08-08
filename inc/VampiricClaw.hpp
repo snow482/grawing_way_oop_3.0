@@ -1,11 +1,14 @@
 #pragma once
-#include "Skill.hpp"
+#include <functional>
+#include <Character.hpp>
+#include <Phazes.hpp>
 
-class VampiricClaw : public Skill {
+class VampiricClaw {
 public:
-    explicit VampiricClaw(int vampiricDamage, int vampiricHp);
-    void Use(std::shared_ptr<Character> self,
-             std::shared_ptr<Character> enemy) override;
+    VampiricClaw(int vampiricDamage, int vampiricHp);
+    ~VampiricClaw() = default;
+    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
+                                                          std::shared_ptr<Character> enemy);
 private:
     int m_vampiricDamage = 0;
     int m_vampiricHp = 0;

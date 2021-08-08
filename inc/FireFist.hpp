@@ -1,24 +1,17 @@
 #pragma once
 #include <functional>
-#include "Character.hpp"
+#include <Character.hpp>
+#include <Phazes.hpp>
 
-enum class fazeType {
-    Start,
-    Instantly,
-    End
-};
 
 struct FireFist {
 public:
-    FireFist(std::string skillName, int fireDamage);
+    FireFist(int fireDamage);
     ~FireFist() = default;
 
-    int operator()(std::shared_ptr<Character> self,
-                    std::shared_ptr<Character> enemy);
-
-
+    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
+                                                          std::shared_ptr<Character> enemy);
 private:
-    std::string m_skillName;
     int m_fireDamage = 0;
 };
 

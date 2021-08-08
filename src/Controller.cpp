@@ -28,7 +28,7 @@ std::shared_ptr<Character> Controller::pickCharacter(int number) {
         case 1:
             {
                 auto monk = std::make_shared<Character>("Vasya Monk", 64, 64);
-                monk->addSkill(FireFist("",20));
+                //monk->addSkill(FireFist("Fire Fist",20));
                 //monk->addSkill(std::make_shared<VampiricClaw>(20, 20));
                 //monk->addSkill(std::make_shared<Heal>(10));
                 return monk;
@@ -36,7 +36,7 @@ std::shared_ptr<Character> Controller::pickCharacter(int number) {
         case 2:
             {
                 auto paladin = std::make_shared<Character>("Sonya Paladin", 86, 86);
-                paladin->addSkill(FireFist("",30));
+                //paladin->addSkill(FireFist("Fire Fist",30));
                 //paladin->addSkill(std::make_shared<Heal>(20));
                 //paladin->addSkill(std::make_shared<Paralysis>(1));
                 return paladin;
@@ -44,7 +44,7 @@ std::shared_ptr<Character> Controller::pickCharacter(int number) {
         case 3:
             {
                 auto ranger = std::make_shared<Character>("Venya Ranger", 86, 86);
-                //ranger->addSkill(std::make_shared<PoisonArrow>(17, 3, 5));
+                ranger->addSkill("Poison Arrow",PoisonArrow(17, 5));
                 //ranger->addSkill(std::make_shared<Heal>(15));
                 //ranger->addSkill(std::make_shared<MagicShield>(1, 0));
                 return ranger;
@@ -61,7 +61,7 @@ std::shared_ptr<Character> Controller::pickCharacter(int number) {
         case 5:
             {
                 auto cleric = std::make_shared<Character>("Cleric Fedor", 75, 75);
-                //cleric->addSkill(std::make_shared<FireFist>(15));
+                //cleric->addSkill(FireFist("Fire Fist",15));
                 //cleric->addSkill(std::make_shared<VampiricClaw>(40, 40));
                 //cleric->addSkill(std::make_shared<Heal>(40));
                 return cleric;
@@ -134,11 +134,7 @@ void Controller::playerInput(std::shared_ptr<Character> attacker,
 void Controller::fight() {
 
     while (m_player1->hpQuantity() > 0 && m_player2->hpQuantity() > 0) {
-        // TODO: баг, если сначала ходит Вася монк и бьет, а Катя прикрывается щитом,
-        //  на след ходу щит слетит, тк обновится nextTurn(), а надо так, чтобы он повисел 1 раунд
-        //  начиная с хода Кати
-        // TODO: если при малом колличестве хп отравить противника, он умрет,
-        //  но не выйдет сообщения, кто победил (надо чекать хп где то внутри уже)
+
         m_player1->nextTurn();
         m_player2->nextTurn();
         int firstPlayerAttackNumber = 0;

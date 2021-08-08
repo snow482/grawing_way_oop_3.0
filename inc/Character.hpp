@@ -6,11 +6,12 @@
 #include <memory>
 #include <algorithm>
 #include <functional>
+#include <Phazes.hpp>
 
 class Character;
 // Character - базовый класс
 // std::enable_shared_from_this<Character> - шаблонная магия (статический полиморфизм)
-using Skill = std::function<int(std::shared_ptr<Character>, std::shared_ptr<Character>)>;
+using Skill = std::function<std::vector<std::pair<phazeType, Involve>>(std::shared_ptr<Character>, std::shared_ptr<Character>)>;
 
 class Character : public std::enable_shared_from_this<Character> {
 public:
@@ -27,19 +28,32 @@ public:
     void addHp(int hp);
     int getMaxHp() const;
     void attack(std::shared_ptr<Character>& enemy, int skillNum);
-    void addSkill(Skill skill);
-    //std::vector<std::string> printSkills() const;
+    void addSkill(std::string skillName, Skill skill);
 
-    void setPoison(int turns, int damage);
-    void setParalyse(int turns);
-    void setShield(int turns);
-    int getParalyseCondition() const;
-    int getShieldCondition() const;
+    Skill getSkill(std::string skillName);
+    void addInvolve(phazeType phaze, Involve involve); // дописать
+    std::vector<std::string> printSkills() const;
+
+    void nextStartPhaze();
+    void nextInstantPhaze();
+    void nextEndPhaze();
+
+
+    // вывел скилы printSkills()
+    // getSkill()
+    // что то с addInvolve(какая фаза, колличество воздействий)
+    // распихать скилы по векторам
+
 private:
     std::string m_name;
     int m_hp = 0;
     int m_maxHp = 0;
-    std::vector<Skill> m_skills;
+    std::map<std::string, Skill> m_skills;
+
+    std::vector<Involve> m_startPhaze;
+    std::vector<Involve> m_instantPhaze;
+    std::vector<Involve> m_endPhaze;
+
     int m_poisonTurns = 0;
     int m_poisonDamage = 0;
     int m_paralysedTurns = 0;

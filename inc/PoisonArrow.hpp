@@ -1,14 +1,18 @@
 #pragma once
-#include "Skill.hpp"
+#include <functional>
+#include <Character.hpp>
+#include <Phazes.hpp>
 
 
-class PoisonArrow : public Skill {
+class PoisonArrow {
 public:
-    explicit PoisonArrow(int damage, int turns, int poisonDamage);
-    void Use(std::shared_ptr<Character> self,
-             std::shared_ptr<Character> enemy) override;
+    PoisonArrow(int damage, int poisonDamage);
+    ~PoisonArrow() = default;
+
+    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
+                                                          std::shared_ptr<Character> enemy);
 private:
+
     int m_arrowDamage;
-    int m_turns;
     int m_poisonDamage;
 };

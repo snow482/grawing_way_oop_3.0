@@ -2,7 +2,6 @@
 #include <iostream>
 #include <filesystem>
 #include "Character.hpp"
-#include "Skill.hpp"
 
 
 class Controller {
@@ -25,3 +24,6 @@ private:
     std::shared_ptr<Character> m_player1 = nullptr;
     std::shared_ptr<Character> m_player2 = nullptr;
 };
+
+
+//
