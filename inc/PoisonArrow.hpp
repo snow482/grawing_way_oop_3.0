@@ -6,7 +6,7 @@
 
 class PoisonArrow {
 public:
-    PoisonArrow(int damage, int poisonDamage);
+    PoisonArrow(int damage, int poisonDamage, int rounds);
     ~PoisonArrow() = default;
 
     std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
@@ -15,4 +15,5 @@ private:
 
     int m_arrowDamage;
     int m_poisonDamage;
+    int m_rounds;
 };

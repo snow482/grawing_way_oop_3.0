@@ -1,12 +1,16 @@
 #pragma once
-#include "Skill.hpp"
+#include <functional>
+#include <Character.hpp>
+#include <Phazes.hpp>
 
 
-class Heal : public Skill {
+class Heal {
 public:
-    explicit Heal(int healPoints);
-    void Use(std::shared_ptr<Character> self,
-             std::shared_ptr<Character> enemy) override;
+    Heal(int healPoints);
+    ~Heal() = default;
+
+    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
+                                                          std::shared_ptr<Character> enemy);
 private:
     int m_additionalHp = 15;
 };

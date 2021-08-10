@@ -1,8 +1,8 @@
 #include "VampiricClaw.hpp"
 
 
-VampiricClaw::VampiricClaw(int vampiricDamage, int vampiricHp)
-    : m_vampiricDamage(vampiricDamage), m_vampiricHp(vampiricHp)
+VampiricClaw::VampiricClaw(int vampiricDamage, int vampiricHp, int rounds)
+    : m_vampiricDamage(vampiricDamage), m_vampiricHp(vampiricHp), m_rounds(rounds)
 {}
 
 std::vector<std::pair<phazeType, Involve>> VampiricClaw::operator()(std::shared_ptr<Character> self,
@@ -14,8 +14,8 @@ std::vector<std::pair<phazeType, Involve>> VampiricClaw::operator()(std::shared_
         return 0;
     }};
 
-    int rounds = 2;
-    std::pair<phazeType, Involve> vampiric = {phazeType::End, [this, self, rounds]() mutable {
+    int time = m_rounds;
+    std::pair<phazeType, Involve> vampiric = {phazeType::End, [this, self, time]() mutable {
         if (self->hpQuantity() != self->getMaxHp()) {
             self->addHp(m_vampiricHp);
             std::cout << "drinked hp" << std::endl;
@@ -23,6 +23,7 @@ std::vector<std::pair<phazeType, Involve>> VampiricClaw::operator()(std::shared_
         else {
             std::cout << "full HP!" << std::endl;
         }
+        return --time;
     }};
-    return {};
+    return {instantDamage, vampiric};
 }

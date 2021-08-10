@@ -29,7 +29,7 @@ std::shared_ptr<Character> Controller::pickCharacter(int number) {
             {
                 auto monk = std::make_shared<Character>("Vasya Monk", 64, 64);
                 //monk->addSkill(FireFist("Fire Fist",20));
-                //monk->addSkill(std::make_shared<VampiricClaw>(20, 20));
+                monk->addSkill("Vampiric Claw", VampiricClaw(20, 20, 3));
                 //monk->addSkill(std::make_shared<Heal>(10));
                 return monk;
             }
@@ -44,7 +44,7 @@ std::shared_ptr<Character> Controller::pickCharacter(int number) {
         case 3:
             {
                 auto ranger = std::make_shared<Character>("Venya Ranger", 86, 86);
-                ranger->addSkill("Poison Arrow",PoisonArrow(17, 5));
+                ranger->addSkill("Poison Arrow",PoisonArrow(17, 5, 3));
                 //ranger->addSkill(std::make_shared<Heal>(15));
                 //ranger->addSkill(std::make_shared<MagicShield>(1, 0));
                 return ranger;
@@ -146,7 +146,7 @@ void Controller::fight() {
                   << m_player2->hpQuantity() << "\n";
         std::cout << std::endl;
 
-        if (m_player1->hpQuantity() > 0) {
+        /*if (m_player1->hpQuantity() > 0) {
             std::cout << m_player1->getName()<< " please write number of attack" << std::endl;
             if (m_player1->getParalyseCondition() == 0) {
                 for (auto& it : m_player1->printSkills()) {
@@ -195,7 +195,7 @@ void Controller::fight() {
         }
         else {
             std::cout << m_player1->getName() << " Winner!" << std::endl;
-        }
+        }*/
     }
 }
 

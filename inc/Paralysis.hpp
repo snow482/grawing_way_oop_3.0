@@ -1,17 +1,18 @@
 #pragma once
 #include <functional>
 #include <Character.hpp>
+#include <Phazes.hpp>
 
 
 class Paralysis {
 public:
-    Paralysis(std::string& skillName);
+    Paralysis(int rounds);
     ~Paralysis() = default;
 
-    int operator()(std::shared_ptr<Character> self,
-             std::shared_ptr<Character> enemy);
+    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
+                                                          std::shared_ptr<Character> enemy);
 private:
-    std::string m_skillName;
+    int m_rounds;
 };
 
 

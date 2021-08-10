@@ -2,6 +2,7 @@
 
 
 #define noused(x) (void)(x)
+
 enum class phazeType {
     Start,
     Instantly,

@@ -1,15 +1,17 @@
 #pragma once
-#include "Skill.hpp"
+#include <functional>
+#include <Character.hpp>
+#include <Phazes.hpp>
 
 
-class MagicShield : public Skill {
+class MagicShield {
 public:
-    explicit MagicShield(int turns, int damage);
-    void Use(std::shared_ptr<Character> self,
-                      std::shared_ptr<Character> enemy) override;
+    MagicShield(int rounds);
+    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
+                                                          std::shared_ptr<Character> enemy);
 
 private:
-    int m_turns;
+    int m_rounds;
     int m_blockedDamage;
 };
 

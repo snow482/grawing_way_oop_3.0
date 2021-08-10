@@ -85,4 +85,16 @@ void Character::nextTurn() {
     }
 }
 
+void Character::addInvolve(phazeType phaze, Involve involve) {
+    //TODO дописать, в какую фазу, что будет отрабатывать
+    // типа если if (phaze == phazeType::start или в enum[0] ) { m_startPhaze.push_back(кол-во воздействий конкретного скила) }
+    // вывел скилы printSkills()
+    // getSkill()
+    // что то с addInvolve(какая фаза, колличество воздействий)
+    // распихать скилы по векторам
+}
+
+
+//TODO по лямбде возвращающей состояние (под шилдой или нет)
+
 
