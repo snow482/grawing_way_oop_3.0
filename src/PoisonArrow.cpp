@@ -15,12 +15,12 @@ std::vector<std::pair<phazeType, Involve>> PoisonArrow::operator()(std::shared_p
         return 0;
     }};
     int time = m_rounds;
-    std::pair<phazeType, Involve> endDamage = {phazeType::End, [this, enemy, time]() mutable {
+    std::pair<phazeType, Involve> startDamage = {phazeType::Start, [this, enemy, time]() mutable {
         enemy->getDamage(m_poisonDamage);
         std::cout<< "damaged by poison" << std::endl;
         return --time;
     }};
-    return {instantDamage, endDamage};
+    return {instantDamage, startDamage};
 }
 
 

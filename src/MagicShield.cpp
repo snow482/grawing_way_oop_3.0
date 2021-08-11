@@ -1,5 +1,4 @@
 #include "MagicShield.hpp"
-#include "Character.hpp"
 
 
 MagicShield::MagicShield(int rounds)
@@ -9,19 +8,18 @@ MagicShield::MagicShield(int rounds)
 std::vector<std::pair<phazeType, Involve>> MagicShield::operator()(std::shared_ptr<Character> self,
                                                                    std::shared_ptr<Character> enemy) {
     int time = m_rounds;
-    std::pair<phazeType, Involve> startBlock = {phazeType::Start, [this, self, time]() mutable {
+    std::pair<phazeType, Involve> instantShieldUp = {phazeType::Instantly, [this, self]() mutable {
+        self->setShieldState(true);
         std::cout << "Under the shield (start)" << std::endl;
-        /*self->setShield(m_turns);*/
-        return --time;
+        return 0;
     }};
-    std::pair<phazeType, Involve> endBlock = {phazeType::End, [this, self, time]() mutable {
+    std::pair<phazeType, Involve> endShieldDown = {phazeType::End, [this, self]() mutable {
+        self->setShieldState(false);
         std::cout << "Under the shield (end)" << std::endl;
-        /*self->setShield(m_turns);*/
-        return -- time;
+        return 0;
     }};
 
-    //self->getDamage(m_blockedDamage); TODO
     noused(enemy);
-    return {startBlock, endBlock};
+    return {instantShieldUp, endShieldDown};
 }
 

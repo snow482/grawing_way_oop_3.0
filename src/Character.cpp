@@ -18,10 +18,29 @@ int Character::hpQuantity() const {
     return m_hp;
 }
 void Character::getDamage(int damage) {
-    m_hp -= damage;
+    if(!m_shieldUp && !m_paralysisUp)
+        m_hp -= damage;
+    std::cout << "You weapon to weak for my shield! hahahha" << std::endl;
 }
+void Character::setShieldState(bool state) {
+   m_shieldUp = state;
+}
+bool Character::getParalysisState() {
+    return m_paralysisUp;
+}
+void Character::setParalysisState(bool state) {
+    m_paralysisUp = state;
+}
+
 void Character::addHp(int hp) {
-    m_hp += hp;
+    if(!m_paralysisUp)
+        if(m_hp != m_maxHp)
+            m_hp += hp;
+        else
+            std::cout << "full HP!" << std::endl;
+    else {
+        std::cout << "AM PRLST" << std::endl;
+    }
 }
 int Character::getMaxHp() const {
     return m_maxHp;

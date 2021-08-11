@@ -12,7 +12,6 @@ public:
 
 private:
     int m_rounds;
-    int m_blockedDamage;
 };
 
 /*

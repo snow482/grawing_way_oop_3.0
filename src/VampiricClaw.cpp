@@ -16,13 +16,8 @@ std::vector<std::pair<phazeType, Involve>> VampiricClaw::operator()(std::shared_
 
     int time = m_rounds;
     std::pair<phazeType, Involve> vampiric = {phazeType::End, [this, self, time]() mutable {
-        if (self->hpQuantity() != self->getMaxHp()) {
-            self->addHp(m_vampiricHp);
-            std::cout << "drinked hp" << std::endl;
-        }
-        else {
-            std::cout << "full HP!" << std::endl;
-        }
+        self->addHp(m_vampiricHp);
+        std::cout << "drinked hp" << std::endl;
         return --time;
     }};
     return {instantDamage, vampiric};

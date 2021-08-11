@@ -24,7 +24,9 @@ public:
     std::string getName() const;
     int hpQuantity() const;
     void getDamage(int damage);
-
+    void setShieldState(bool state);
+    bool getParalysisState();
+    void setParalysisState(bool state);
     void addHp(int hp);
     int getMaxHp() const;
     void attack(std::shared_ptr<Character>& enemy, int skillNum);
@@ -32,6 +34,7 @@ public:
 
     Skill getSkill(std::string skillName);
     void addInvolve(phazeType phaze, Involve involve); //TODO дописать
+
 
     //TODO
     // вывел скилы printSkills()
@@ -62,6 +65,9 @@ private:
     std::vector<Involve> m_startPhaze;
     std::vector<Involve> m_instantPhaze;
     std::vector<Involve> m_endPhaze;
+
+    bool m_shieldUp;
+    bool m_paralysisUp;
 
     int m_poisonTurns = 0;
     int m_poisonDamage = 0;

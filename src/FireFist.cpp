@@ -14,6 +14,7 @@ std::vector<std::pair<phazeType, Involve>> FireFist::operator()(std::shared_ptr<
         std::cout<< "damaged by arrow" << std::endl;
         return 0;
     }};
+
     std::pair<phazeType, Involve> instantDamage = {phazeType::Instantly, [this, enemy]() mutable {
         enemy->getDamage(m_fireDamage);
         std::cout<< "damaged by arrow" << std::endl;
