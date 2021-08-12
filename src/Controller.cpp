@@ -28,42 +28,42 @@ std::shared_ptr<Character> Controller::pickCharacter(int number) {
         case 1:
             {
                 auto monk = std::make_shared<Character>("Vasya Monk", 64, 64);
-                //monk->addSkill(FireFist("Fire Fist",20));
-                monk->addSkill("Vampiric Claw", VampiricClaw(20, 20, 3));
-                //monk->addSkill(std::make_shared<Heal>(10));
+                monk->addSkill("FireFist",FireFist(20));
+                monk->addSkill("VampiricClaw", VampiricClaw(20, 20, 2));
+                monk->addSkill("Heal",Heal(10));
                 return monk;
             }
         case 2:
             {
                 auto paladin = std::make_shared<Character>("Sonya Paladin", 86, 86);
-                //paladin->addSkill(FireFist("Fire Fist",30));
-                //paladin->addSkill(std::make_shared<Heal>(20));
-                //paladin->addSkill(std::make_shared<Paralysis>(1));
+                paladin->addSkill("FireFist", FireFist(30));
+                paladin->addSkill("Heal",Heal(20));
+                paladin->addSkill("Paralysis",Paralysis(1));
                 return paladin;
             }
         case 3:
             {
                 auto ranger = std::make_shared<Character>("Venya Ranger", 86, 86);
-                ranger->addSkill("Poison Arrow",PoisonArrow(17, 5, 3));
-                //ranger->addSkill(std::make_shared<Heal>(15));
-                //ranger->addSkill(std::make_shared<MagicShield>(1, 0));
+                ranger->addSkill("PoisonArrow",PoisonArrow(17, 5, 3));
+                ranger->addSkill("Heal",Heal(15));
+                ranger->addSkill("MagicShield",MagicShield(1));
                 return ranger;
             }
         case 4:
             {
                 auto sorcerer = std::make_shared<Character>("Ekaterina Sorcerer", 55, 55);
-                //sorcerer->addSkill(std::make_shared<VampiricClaw>(30, 20));
-                //sorcerer->addSkill(std::make_shared<PoisonArrow>(20, 2, 10));
-                //sorcerer->addSkill(std::make_shared<MagicShield>(1, 0));
-                //sorcerer->addSkill(std::make_shared<Paralysis>(1));
+                sorcerer->addSkill("VampiricClaw",VampiricClaw(30, 20, 2));
+                sorcerer->addSkill("PoisonArrow",PoisonArrow(20, 10, 2));
+                sorcerer->addSkill("MagicShield",MagicShield(1));
+                sorcerer->addSkill("Paralysis",Paralysis(2));
                 return sorcerer;
             }
         case 5:
             {
                 auto cleric = std::make_shared<Character>("Cleric Fedor", 75, 75);
-                //cleric->addSkill(FireFist("Fire Fist",15));
-                //cleric->addSkill(std::make_shared<VampiricClaw>(40, 40));
-                //cleric->addSkill(std::make_shared<Heal>(40));
+                cleric->addSkill("FireFist",FireFist(15));
+                cleric->addSkill("VampiricClaw",VampiricClaw(40, 40, 1));
+                cleric->addSkill("Heal", Heal(40));
                 return cleric;
             }
         default: throw std::exception("pick character from 1 to 5");
@@ -92,7 +92,7 @@ void Controller::characterCreating() {
 void Controller::playerQueue() {
     int firstThrower, secondThrower = 0;
     std::cout << "Initiative throws" << std::endl;
-    std::cout << "Rolling, who will be first\n";
+    std::cout << "Rolling, who will attack\n";
     do {
         firstThrower = m_player1->queueThrow();
         secondThrower = m_player2->queueThrow();
@@ -102,37 +102,45 @@ void Controller::playerQueue() {
               << m_player2->getName() << " rolled: " << secondThrower << "\n";
 
     if (firstThrower < secondThrower) {
-        std::swap(m_player1, m_player2);
+        std::cout << m_player2->getName() << " attacking first\n";
+        std::cout << std::endl;
+        //std::swap(m_player1, m_player2);
     }
-    std::cout << m_player1->getName() << " attacking first\n";
-    std::cout << std::endl;
+    else {
+        std::cout << m_player1->getName() << " attacking first\n";
+        std::cout << std::endl;
+    }
+
 }
 
 void Controller::playerInput(std::shared_ptr<Character> attacker,
-                             std::shared_ptr<Character> enemy, int playerChoise) {
+                             std::shared_ptr<Character> enemy,
+                             int phazeType,
+                             int playerChoise) {
     if (playerChoise <= attacker->printSkills().size()) {
         switch (playerChoise) {
-            case 1: attacker->attack(enemy, 0);
+            case 1: attacker->addSkill("FireFist", nullptr);
+                attacker->addInvolve(phazeType::Start,std::function<int()>());
                 break;
-            case 2: attacker->attack(enemy, 1);
+            case 2: attacker->addSkill("PoisonArrow", nullptr);
                 break;
-            case 3: attacker->attack(enemy, 2);
+            case 3: attacker->addSkill("VampiricClaw", nullptr);
                 break;
-            case 4: attacker->attack(enemy, 3);
+            case 4: attacker->addSkill("Heal", nullptr);
                 break;
-            case 5: attacker->attack(enemy, 4);
+            case 5: attacker->addSkill("MagicShield", nullptr);
                 break;
+            case 6: attacker->addSkill("Paralysis", nullptr);
             default: std::cout << "You should chose the skill or you can't do it on this round!" << std::endl;
+                break;
         }
     }
     else {
         std::cout << "need chose right skill number" << std::endl;
     }
-    //std::swap(attacker, enemy);
 }
 
 void Controller::fight() {
-
     while (m_player1->hpQuantity() > 0 && m_player2->hpQuantity() > 0) {
 
         m_player1->nextTurn();
@@ -145,6 +153,10 @@ void Controller::fight() {
         std::cout << m_player2->getName() << " - hp: "
                   << m_player2->hpQuantity() << "\n";
         std::cout << std::endl;
+        //TODO надо написать поочередно идущие игровые фазы и вызывать из них скилы
+
+
+
 
         /*if (m_player1->hpQuantity() > 0) {
             std::cout << m_player1->getName()<< " please write number of attack" << std::endl;

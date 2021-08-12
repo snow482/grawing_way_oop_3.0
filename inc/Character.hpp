@@ -29,7 +29,7 @@ public:
     void setParalysisState(bool state);
     void addHp(int hp);
     int getMaxHp() const;
-    void attack(std::shared_ptr<Character>& enemy, int skillNum);
+    //void attack(std::shared_ptr<Character>& enemy, int skillNum);
     void addSkill(std::string skillName, Skill skill);
 
     Skill getSkill(std::string skillName);

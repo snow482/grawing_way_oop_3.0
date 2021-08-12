@@ -9,11 +9,10 @@ Heal::Heal(int healPoints)
 std::vector<std::pair<phazeType, Involve>> Heal::operator()(std::shared_ptr<Character> self,
                                                             std::shared_ptr<Character> enemy) {
     noused(enemy);
-    if (self->hpQuantity() != self->getMaxHp()) {
+    std::pair<phazeType, Involve> instantHeal = {phazeType::Instantly, [this, self]() mutable {
         self->addHp(m_additionalHp);
-        std::cout << "healing" << std::endl;
-    }
-    else {
-        std::cout << "full HP!" << std::endl;
-    }
+        std::cout << "Healing" << std::endl;
+        return 0;
+    }};
+    return {instantHeal};
 }
