@@ -8,15 +8,15 @@ VampiricClaw::VampiricClaw(int vampiricDamage, int vampiricHp, int rounds)
 std::vector<std::pair<phazeType, Involve>> VampiricClaw::operator()(std::shared_ptr<Character> self,
                                                                     std::shared_ptr<Character> enemy) {
 
-    std::pair<phazeType, Involve> instantDamage = {phazeType::Instantly, [this, enemy]() mutable {
-        enemy->getDamage(m_vampiricDamage);
+    std::pair<phazeType, Involve> instantDamage = {phazeType::Instantly, [vampiricDamage = m_vampiricDamage, enemy]() {
+        enemy->getDamage(vampiricDamage);
         std::cout << "damaged by vampiric claw" << std::endl;
         return 0;
     }};
 
     int time = m_rounds;
     std::pair<phazeType, Involve> vampiric = {phazeType::End, [this, self, time]() mutable {
-        self->addHp(m_vampiricHp);
+        self->addHp(m_vampiricHp); // внутри выглядит как this->m_vampiricHp
         std::cout << "drinked hp" << std::endl;
         return --time;
     }};
