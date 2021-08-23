@@ -8,7 +8,7 @@ public:
     VampiricClaw(int vampiricDamage, int vampiricHp, int rounds);
     ~VampiricClaw() = default;
 
-    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
+    std::vector<std::pair<phazeType, Involve>> operator()(std::weak_ptr<Character> self,
                                                           std::weak_ptr<Character> enemy);
 private:
     int m_vampiricDamage = 0;

@@ -33,27 +33,8 @@ public:
     void addSkill(std::string skillName, Skill skill);
 
     Skill getSkill(std::string skillName);
-    void addInvolve(phazeType phaze, Involve involve); //TODO дописать
-
-
-    //TODO
-    // вывел скилы printSkills()
-    // getSkill()
-    // что то с addInvolve(какая фаза, колличество воздействий)
-    // распихать скилы по векторам
-
-
-    //TODO подумать над лямбдой состояния, которая будет возвращать текущее состояние противника и себя
-    // типа, находится сейчас противник под щитом или парализован ли я, чтобы нанести удар и тд
-    // - еще по поводу отмены атаки, если под щитом, то есть дамаг не наносится, если я под считом
 
     std::vector<std::string> printSkills() const;
-
-    void nextStartPhaze();
-    void nextInstantPhaze();
-    void nextEndPhaze();
-
-
 
 
 private:
@@ -61,10 +42,6 @@ private:
     int m_hp = 0;
     int m_maxHp = 0;
     std::map<std::string, Skill> m_skills;
-
-    std::vector<Involve> m_startPhaze;
-    std::vector<Involve> m_instantPhaze;
-    std::vector<Involve> m_endPhaze;
 
     bool m_shieldUp;
     bool m_paralysisUp;

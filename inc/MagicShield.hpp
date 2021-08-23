@@ -7,8 +7,8 @@
 class MagicShield {
 public:
     MagicShield(int rounds);
-    std::vector<std::pair<phazeType, Involve>> operator()(std::shared_ptr<Character> self,
-                                                          std::shared_ptr<Character> enemy);
+    std::vector<std::pair<phazeType, Involve>> operator()(std::weak_ptr<Character> self,
+                                                          std::weak_ptr<Character> enemy);
 
 private:
     int m_rounds;

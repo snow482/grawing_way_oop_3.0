@@ -59,35 +59,6 @@ std::vector<std::string> Character::printSkills() const {
     return value;
 }
 
-void Character::nextStartPhaze() {
-    for(auto it = m_startPhaze.begin(); it != m_startPhaze.end();) {
-        int count = (*it)();
-        if(count != 0)
-            ++it;
-        else
-            it = m_startPhaze.erase(it);
-    }
-}
-
-void Character::nextInstantPhaze() {
-    for(auto it = m_instantPhaze.begin(); it != m_instantPhaze.end();) {
-        int count = (*it)();
-        if(count != 0)
-            ++it;
-        else
-            it = m_instantPhaze.erase(it);
-    }
-}
-
-void Character::nextEndPhaze() {
-    for(auto it = m_endPhaze.begin(); it != m_endPhaze.end();) {
-        int count = (*it)();
-        if(count != 0)
-            ++it;
-        else
-            it = m_endPhaze.erase(it);
-    }
-}
 
 
 //переписать на фазы (старт конец середина)
@@ -104,26 +75,7 @@ void Character::nextTurn() {
     }
 }
 
-void Character::addInvolve(phazeType phaze, Involve involve) {
 
-    if(phaze == phazeType::Start)
-        m_startPhaze.push_back(involve);
-
-    if(phaze == phazeType::Instantly)
-        m_instantPhaze.push_back(involve);
-
-    if(phaze == phazeType::End)
-        m_endPhaze.push_back(involve);
-}
-
-
-
-    //TODO дописать, в какую фазу, что будет отрабатывать
-    // типа если if (phaze == phazeType::start или в enum[0] ) { m_startPhaze.push_back(кол-во воздействий конкретного скила) }
-    // вывел скилы printSkills()
-    // getSkill()
-    // что то с addInvolve(какая фаза, колличество воздействий)
-    // распихать скилы по векторам
 
 
 
