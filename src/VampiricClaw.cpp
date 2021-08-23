@@ -6,10 +6,11 @@ VampiricClaw::VampiricClaw(int vampiricDamage, int vampiricHp, int rounds)
 {}
 
 std::vector<std::pair<phazeType, Involve>> VampiricClaw::operator()(std::shared_ptr<Character> self,
-                                                                    std::shared_ptr<Character> enemy) {
+                                                                    std::weak_ptr<Character> enemy) {
 
     std::pair<phazeType, Involve> instantDamage = {phazeType::Instantly, [vampiricDamage = m_vampiricDamage, enemy]() {
-        enemy->getDamage(vampiricDamage);
+        auto enemyPtr = enemy.lock();
+        enemyPtr->getDamage(vampiricDamage);
         std::cout << "damaged by vampiric claw" << std::endl;
         return 0;
     }};
