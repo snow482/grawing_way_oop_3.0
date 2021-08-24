@@ -59,8 +59,6 @@ std::vector<std::string> Character::printSkills() const {
     return value;
 }
 
-
-
 //переписать на фазы (старт конец середина)
 void Character::nextTurn() {
     if (m_poisonTurns > 0) {
@@ -75,10 +73,5 @@ void Character::nextTurn() {
     }
 }
 
-
-
-
-
 //TODO по лямбде возвращающей состояние (под шилдой или нет)
-
 

@@ -110,7 +110,6 @@ void Controller::playerQueue() {
         std::cout << m_player1->getName() << " attacking first\n";
         std::cout << std::endl;
     }
-
 }
 
 void Controller::playerInput(std::shared_ptr<Character> attacker,
@@ -120,7 +119,6 @@ void Controller::playerInput(std::shared_ptr<Character> attacker,
     if (playerChoise <= attacker->printSkills().size()) {
         switch (playerChoise) {
             case 1: attacker->addSkill("FireFist", nullptr);
-                attacker->addInvolve(phazeType::Start,std::function<int()>());
                 break;
             case 2: attacker->addSkill("PoisonArrow", nullptr);
                 break;
@@ -149,11 +147,49 @@ void Controller::fight() {
         int secondPlayerAttackNumber = 0;
 
         std::cout << m_player1->getName() << " - hp: "
+        << m_player1->hpQuantity() << "\n";
+        std::cout << m_player2->getName() << " - hp: "
+        << m_player2->hpQuantity() << "\n";
+        std::cout << std::endl;
+        //TODO надо написать поочередно идущие игровые фазы и вызывать из них скилы
+        //addInvolve(phazeType::Start,std::function<int()>());
+
+
+        if (m_player1->hpQuantity() > 0) {
+            std::cout << m_player1->getName()<< " please write number of attack" << std::endl;
+
+            for (auto& it : m_player1->printSkills()) {
+                std::cout << it << std::endl;
+            }
+            std::cin >> firstPlayerAttackNumber;
+            playerInput(m_player1, m_player2, 0, firstPlayerAttackNumber);
+            playerInput(m_player1, m_player2, 1, firstPlayerAttackNumber);
+
+        }
+        else {
+            std::cout << m_player2->getName() << " Winner!" << std::endl;
+        }
+
+        std::cout << m_player1->getName() << " - hp: "
                   << m_player1->hpQuantity() << "\n";
         std::cout << m_player2->getName() << " - hp: "
                   << m_player2->hpQuantity() << "\n";
         std::cout << std::endl;
-        //TODO надо написать поочередно идущие игровые фазы и вызывать из них скилы
+
+        if (m_player2->hpQuantity() > 0) {
+            std::cout << m_player2->getName() << " please write number of attack" << std::endl;
+
+                for (auto& it : m_player2->printSkills()) {
+                    std::cout << it << std::endl;
+                }
+                std::cin >> secondPlayerAttackNumber;
+                playerInput(m_player2, m_player1, 0, secondPlayerAttackNumber);
+        }
+        else {
+            std::cout << m_player1->getName() << " Winner!" << std::endl;
+        }
+    }
+}
 
 
 void Controller::nextStartPhaze() {
@@ -200,65 +236,9 @@ void Controller::addInvolve(phazeType phaze, Involve involve) {
 
 
 
-        //TODO дописать, в какую фазу, что будет отрабатывать
-        // типа если if (phaze == phazeType::start или в enum[0] ) { m_startPhaze.push_back(кол-во воздействий конкретного скила) }
-        // вывел скилы printSkills()
-        // getSkill()
-        // что то с addInvolve(какая фаза, колличество воздействий)
-        // распихать скилы по векторам
-
-
-        /*if (m_player1->hpQuantity() > 0) {
-            std::cout << m_player1->getName()<< " please write number of attack" << std::endl;
-            if (m_player1->getParalyseCondition() == 0) {
-                for (auto& it : m_player1->printSkills()) {
-                    std::cout << it << std::endl;
-                }
-                std::cin >> firstPlayerAttackNumber;
-            }
-            else {
-                std::cout << "I'm paralysed" << std::endl;
-            }
-            if (m_player2->getShieldCondition() == 0) {
-                playerInput(m_player1, m_player2, firstPlayerAttackNumber);
-            }
-            else {
-                std::cout << "Hey! " << m_player2->getName()  << ", nice block!" << std::endl;
-            }
-        }
-        else {
-            std::cout << m_player2->getName() << " Winner!" << std::endl;
-        }
-
-        std::cout << m_player1->getName() << " - hp: "
-                  << m_player1->hpQuantity() << "\n";
-        std::cout << m_player2->getName() << " - hp: "
-                  << m_player2->hpQuantity() << "\n";
-        std::cout << std::endl;
-
-        if (m_player2->hpQuantity() > 0) {
-            std::cout << m_player2->getName() << " please write number of attack" << std::endl;
-
-            if (m_player2->getParalyseCondition() == 0) {
-                for (auto& it : m_player2->printSkills()) {
-                    std::cout << it << std::endl;
-                }
-                std::cin >> secondPlayerAttackNumber;
-            }
-            else {
-                std::cout << "I'm paralysed" << std::endl;
-            }
-
-            if (m_player1->getShieldCondition() == 0) {
-                playerInput(m_player2, m_player1, secondPlayerAttackNumber);
-            } else {
-                std::cout << "Hey! " << m_player1->getName() << ", nice block!" << std::endl;
-            }
-        }
-        else {
-            std::cout << m_player1->getName() << " Winner!" << std::endl;
-        }*/
-    }
-}
-
-
+//TODO дописать, в какую фазу, что будет отрабатывать
+// типа если if (phaze == phazeType::start или в enum[0] ) { m_startPhaze.push_back(кол-во воздействий конкретного скила) }
+// вывел скилы printSkills()
+// getSkill()
+// что то с addInvolve(какая фаза, колличество воздействий)
+// распихать скилы по векторам
