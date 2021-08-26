@@ -112,7 +112,7 @@ void Controller::playerQueue() {
     }
 }
 
-void Controller::playerInput(std::shared_ptr<Character> attacker,
+/*void Controller::playerInput(std::shared_ptr<Character> attacker,
                              std::shared_ptr<Character> enemy,
                              int phazeType,
                              int playerChoise) {
@@ -136,7 +136,37 @@ void Controller::playerInput(std::shared_ptr<Character> attacker,
     else {
         std::cout << "need chose right skill number" << std::endl;
     }
+}*/
+
+void Controller::playerInput(std::shared_ptr<Character> attacker,
+                             std::shared_ptr<Character> enemy,
+                             ///заменить string на int, а то слишком моторно прописывать название скила
+                             ///возможно, добавить в скилл номер либо как реализовать, как было до того
+                             std::string playerChoise) {
+    //if (playerChoise <= attacker->printSkills().size()) {
+    ///написать бесконечный цикл, который будет чекать правильность данных (цифра входит в количество скилов)
+
+    //}
+    //else {
+    //    std::cout << "need chose right skill number" << std::endl;
+    //}
 }
+{
+    ///вынести в отдельную функцию, что будет чисто разпуливать фанкшены в вектора конкретной фазы
+    auto skill=attacker->getSkill(playerChoise);
+    auto involves = skill(attacker, enemy);
+
+    for (auto [phaza, involve] : involves)
+    {
+        switch (phaza) {
+            case phazeType::Instantly:
+                m_startPhaze.push_back(involve);
+        }
+    }
+}
+
+
+
 
 void Controller::fight() {
     while (m_player1->hpQuantity() > 0 && m_player2->hpQuantity() > 0) {
